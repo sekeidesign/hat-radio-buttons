@@ -13,46 +13,68 @@
             <span class="text-sm font-bold text-gray-500 uppercase">Pricing</span>
             <h1 class="text-4xl font-semibold -mt-2">Select your plan</h1>
         </div>
-        <div class="flex justify-center mt-8">
-            <div class="mx-3 w-56 rounded-lg border border-indigo-400 bg-white overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="flex justify-between items-center px-4 py-3 border-b border-indigo-400 bg-indigo-100">
-                    <span class="text-base text-indigo-700">Small</span>
-                    <svg class="h-5 w-5 fill-current text-indigo-600" viewBox="0 0 512 512"><title>ionicons-v5-e</title><path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48ZM364.25,186.29l-134.4,160a16,16,0,0,1-12,5.71h-.27a16,16,0,0,1-11.89-5.3l-57.6-64a16,16,0,1,1,23.78-21.4l45.29,50.32L339.75,165.71a16,16,0,0,1,24.5,20.58Z"/></svg>
-                </div>
-                <div class="px-4 py-3">
-                    <div class="text-gray-600 text-sm font-light">
-                        <p>8gb/4CPUs</p>
-                        <p>160 GB SSD disk</p>
+        <div 
+            class="flex justify-center mt-8"
+            x-data="{
+                isChecked: 'small',
+                plans: [
+                    {
+                        name: 'small',
+                        memory: 8,
+                        cpus: 4,
+                        storage: 160,
+                        price: 40,
+                    },
+                    {
+                        name: 'medium',
+                        memory: 16,
+                        cpus: 6,
+                        storage: 320,
+                        price: 80,
+                    },
+                    {
+                        name: 'large',
+                        memory: 32,
+                        cpus: 8,
+                        storage: 640,
+                        price: 120,
+                    },
+                ]
+            }"
+        >
+            <template x-for="plan in plans">
+                <div 
+                    class="mx-3 w-56 rounded-lg border border-gray-400 bg-white overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-200"
+                    :class="{ 'border-indigo-400' : isChecked === plan.name }"
+                    @click="isChecked = plan.name"
+                >
+                    <div 
+                        class="flex justify-between items-center px-4 py-3 border-b border-gray-400"
+                        :class="{ 'border-indigo-400 bg-indigo-100' : isChecked === plan.name }"    
+                    >
+                        <span 
+                            class="text-base capitalize"
+                            :class="{ 'text-indigo-700' : isChecked === plan.name }"
+                            x-text="plan.name"
+                        ></span>
+                        <svg 
+                            class="h-5 w-5 fill-current text-indigo-600"
+                            x-show="isChecked === plan.name"
+                            viewBox="0 0 512 512"
+                        >
+                            <title>ionicons-v5-e</title>
+                            <path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48ZM364.25,186.29l-134.4,160a16,16,0,0,1-12,5.71h-.27a16,16,0,0,1-11.89-5.3l-57.6-64a16,16,0,1,1,23.78-21.4l45.29,50.32L339.75,165.71a16,16,0,0,1,24.5,20.58Z"/>
+                        </svg>
                     </div>
-                    <p class="mt-2 text-2xl font-bold">$40/mo</p>
-                </div>
-            </div>
-            <div class="mx-3 w-56 rounded-lg border border-gray-400 bg-white overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="flex justify-between items-center px-4 py-3 border-b border-gray-400">
-                    <span class="text-base">Medium</span>
-                    <svg class="h-5 w-5 fill-current text-indigo-700 hidden" viewBox="0 0 512 512"><title>ionicons-v5-e</title><path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48ZM364.25,186.29l-134.4,160a16,16,0,0,1-12,5.71h-.27a16,16,0,0,1-11.89-5.3l-57.6-64a16,16,0,1,1,23.78-21.4l45.29,50.32L339.75,165.71a16,16,0,0,1,24.5,20.58Z"/></svg>
-                </div>
-                <div class="px-4 py-3">
-                    <div class="text-gray-600 text-sm font-light">
-                        <p>16gb/6CPUs</p>
-                        <p>320 GB SSD disk</p>
+                    <div class="px-4 py-3">
+                        <div class="text-gray-600 text-sm font-light">
+                            <p><span x-text="plan.memory">8</span>gb/<span x-text="plan.cpus">4</span>CPUs</p>
+                            <p><span x-text="plan.storage">160</span> GB SSD disk</p>
+                        </div>
+                        <p class="mt-2 text-2xl font-bold">$<span x-text="plan.price">40</span>/mo</p>
                     </div>
-                    <p class="mt-2 text-2xl font-bold">$80/mo</p>
                 </div>
-            </div>
-            <div class="mx-3 w-56 rounded-lg border border-gray-400 bg-white overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="flex justify-between items-center px-4 py-3 border-b border-gray-400">
-                    <span class="text-base">Large</span>
-                    <svg class="h-5 w-5 fill-current text-indigo-700 hidden" viewBox="0 0 512 512"><title>ionicons-v5-e</title><path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48ZM364.25,186.29l-134.4,160a16,16,0,0,1-12,5.71h-.27a16,16,0,0,1-11.89-5.3l-57.6-64a16,16,0,1,1,23.78-21.4l45.29,50.32L339.75,165.71a16,16,0,0,1,24.5,20.58Z"/></svg>
-                </div>
-                <div class="px-4 py-3">
-                    <div class="text-gray-600 text-sm font-light">
-                        <p>32gb/8CPUs</p>
-                        <p>640 GB SSD disk</p>
-                    </div>
-                    <p class="mt-2 text-2xl font-bold">$120/mo</p>
-                </div>
-            </div>
+            </template>
         </div>
     </div>
     
