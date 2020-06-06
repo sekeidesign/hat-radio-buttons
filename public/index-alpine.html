@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAT Radio Buttons</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col items-center">
+            <span class="text-sm font-bold text-gray-500 uppercase leading-tight">Pricing</span>
+            <h1 class="text-4xl font-semibold -mt-2">Select your plan</h1>
+        </div>
+        <div
+            class="flex justify-center mt-8"
+            x-data="{ 
+                isChecked: 'small',
+                plans: [
+                    {
+                        name: 'small',
+                        memory: 8,
+                        cpus: 4,
+                        storage: 160,
+                        price: 40,
+                    },
+                    {
+                        name: 'medium',
+                        memory: 16,
+                        cpus: 6,
+                        storage: 320,
+                        price: 80,
+                    },
+                    {
+                        name: 'large',
+                        memory: 32,
+                        cpus: 8,
+                        storage: 640,
+                        price: 120,
+                    },
+                ]
+            }"
+        >
+            <template x-for="plan in plans">
+                <div 
+                    class="mx-3 w-56 rounded-lg border border-gray-400 bg-white overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-200"
+                    :class="{ 'border-indigo-500': isChecked === plan.name }"
+                    @click="isChecked = plan.name"
+                >
+                    <div 
+                        class="flex justify-between items-center px-4 py-3 border-b border-gray-400"
+                        :class="{ 'border-indigo-500 bg-indigo-100': isChecked === plan.name }"
+                    >
+                        <span 
+                            class="text-sm text-indigo-700 capitalize"
+                            :class="{ 'text-indigo-700': isChecked === plan.name }"
+                            x-text="plan.name"
+                        ></span>
+                        <svg 
+                            x-show="isChecked === plan.name"
+                            class="h-5 w-5 text-indigo-700 fill-current"
+                            viewBox="0 0 512 512"
+                        >
+                            <title>ionicons-v5-e</title>
+                            <path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48ZM364.25,186.29l-134.4,160a16,16,0,0,1-12,5.71h-.27a16,16,0,0,1-11.89-5.3l-57.6-64a16,16,0,1,1,23.78-21.4l45.29,50.32L339.75,165.71a16,16,0,0,1,24.5,20.58Z"/>
+                        </svg>
+                    </div>
+                    <div class="px-4 py-3">
+                        <div class="text-gray-600 text-sm font-light">
+                            <p><span x-text="plan.memory"></span>gb/<span x-text="plan.cpus"></span>CPUs</p>
+                            <p><span x-text="plan.storage"></span> GB SSD disk</p>
+                        </div>
+                        <p class="mt-2 text-2xl font-bold">$<span x-text="plan.price"></span>/mo</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</body>
+</html>
